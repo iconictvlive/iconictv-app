@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.iconictv.live'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.iconictv.live"
+        minSdk 21          // Android 5.0+ (covers 99%+ of devices)
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false   // Keep false for WebView apps (ProGuard breaks JS bridge)
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // To sign for Play Store, add signingConfig here
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // Generate unsigned APK in /build/outputs/apk/release/
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "IconicTV-${variant.name}-${defaultConfig.versionName}.apk"
+        }
+    }
+}
+
+dependencies {
+    // No extra deps needed — pure Android WebView
+}
